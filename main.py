@@ -43,46 +43,49 @@ class Deck:
         return cards_dealt
 
 class Hand:
-    def __init__(self, dealer=False):
-        self.cards = []
-        self.value = 0
-        self.dealer = dealer
+  def __init__(self, dealer=False):
+            self.cards = []
+            self.value = 0
+            self.dealer = dealer
 
-    def add_card(self, card_list):
-        self.cards.extend(card_list)
+  def add_card(self, card_list):
+            self.cards.extend(card_list)
 
-    def calculate_value(self):
-        self.value = 0
-        has_ace = False
+  def calculate_value(self):
+            self.value = 0
+            has_ace = False
 
-        for card in self.cards:
-            card_value = int(card.rank["value"])
-            self.value += card_value
-            if card.rank["rank"] == "A":
-                has_ace = True
+            for card in self.cards:
+                card_value = int(card.rank["value"])
+                self.value += card_value
+                if card.rank["rank"] == "A":
+                    has_ace = True
 
-        if has_ace and self.value > 21:
-            self.value -= 10
+            if has_ace and self.value > 21:
+                self.value -= 10
 
-    def get_value(self):
-        self.calculate_value()
-        return self.value
+  def get_value(self):
+            self.calculate_value()
+            return self.value
 
-    def is_blackjack(self):
-        return self.get_value() == 21
+  def is_blackjack(self):
+            return self.get_value() == 21
 
-    def display(self, show_all_dealer_cards=False):
-        print(f'''{"Dealer's" if self.dealer else "Your"} hand:''')
-        for index, card in enumerate(self.cards):
-            if index == 0 and self.dealer \
-            and not show_all_dealer_cards and not self.is_blackjack():
-                print("hidden")
+  def display(self, show_all_dealer_cards=False):
+            print(f'''{"Dealer's" if self.dealer else "Your"} hand:''')
+
+            # Updated logic to correctly display the value after hitting
+            if not self.dealer or show_all_dealer_cards:
+                for card in self.cards:
+                    print(card)
+                if not self.dealer:
+                    print("Value:", self.get_value())
             else:
-                print(card)
+                print("hidden")
+                for card in self.cards[1:]:
+                    print(card)
 
-        if not self.dealer:
-            print("Value:", self.get_value())
-        print()
+            print()
 
 class Game:
     def play(self):
