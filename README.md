@@ -1,5 +1,7 @@
 # Blackjack Game
 
+![Blackjack Preview](new.avif)
+
 ## Overview
 
 This is a simple text-based Blackjack game implemented in Python. The game includes a deck of cards, a player's hand, a dealer's hand, and basic gameplay functionality.
